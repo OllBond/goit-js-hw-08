@@ -10,7 +10,7 @@ const formData = {};
 // const getFormData = key => JSON.parse(localStorage.getItem(key));
 
 refs.form.addEventListener('submit', onFormSubmit);
-// refs.form.addEventListener('input', throttle(onTextareaInput, 500));
+refs.form.addEventListener('input', throttle(onFormLocalStorage, 500));
 
 const key = localStorage.getItem(STORAGE_KEY);
 console.log(key);
@@ -28,13 +28,15 @@ if(keyParse !== null) {
 }
 
 
-refs.form.addEventListener('input', e => {
+function onFormLocalStorage (e) {
   
     formData[e.target.name] = e.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
  console.log(formData);
 
-}); 
+} 
+
+refs.form.addEventListener('input', onFormLocalStorage); 
 
 
 function onFormSubmit (e) {
