@@ -10,7 +10,7 @@ const formData = {};
 // const getFormData = key => JSON.parse(localStorage.getItem(key));
 
 refs.form.addEventListener('submit', onFormSubmit);
-// refs.textarea.addEventListener('input', throttle(onTextareaInput, 500));
+// refs.form.addEventListener('input', throttle(onTextareaInput, 500));
 
 const key = localStorage.getItem(STORAGE_KEY);
 console.log(key);
@@ -29,21 +29,13 @@ if(keyParse !== null) {
 
 
 refs.form.addEventListener('input', e => {
-    // console.log(e.target);
+  
     formData[e.target.name] = e.target.value;
-   //  щоб зберегти в localStorage треба формдаті зробити stringify
-//    const formDataString = JSON.stringify(formData);
-//  console.log(formDataString);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
  console.log(formData);
 
-// коли при перезавантаженні читати з localStorage 
-// якщо там щось є треба зробити JSON.parse  
-
- //  localStorage.getItem(STORAGE_KEY,JSON.parse(formData));
 }); 
 
-// populateTextarea ()
 
 function onFormSubmit (e) {
 e.preventDefault();
