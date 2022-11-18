@@ -36,7 +36,7 @@ function onFormLocalStorage (e) {
 
 } 
 
-refs.form.addEventListener('input', onFormLocalStorage); 
+// refs.form.addEventListener('input', onFormLocalStorage); 
 
 
 function onFormSubmit (e) {
