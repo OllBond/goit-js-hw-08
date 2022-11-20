@@ -15,7 +15,7 @@ refs.form.addEventListener('input', throttle(onFormLocalStorage, 500));
 const key = localStorage.getItem(STORAGE_KEY);
 console.log(key);
 
-const keyParse = JSON.parse(key)
+const keyParse = JSON.parse(key);
 console.log(keyParse);
 
 const getInputEmail = document.querySelector('input[name="email"]'); 
