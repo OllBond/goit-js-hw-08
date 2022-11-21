@@ -1,62 +1,38 @@
-import throttle from "lodash.throttle";
+import throttle from 'lodash.throttle';
 
 const STORAGE_KEY = 'feedback-form-state';
 
 const refs = {
-    form: document.querySelector('.feedback-form'),
-    textarea: document.querySelector('.feedback-form textarea'),
-}
+  form: document.querySelector('.feedback-form'),
+  textarea: document.querySelector('.feedback-form textarea'),
+};
 const formData = {};
-// const getFormData = key => JSON.parse(localStorage.getItem(key));
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormLocalStorage, 500));
 
-const key = localStorage.getItem(STORAGE_KEY);
-console.log(key);
+function getData() {
+  const dataJSON = localStorage.getItem(STORAGE_KEY);
+  console.log(dataJSON);
+  if (!dataJSON) return;
 
-const keyParse = JSON.parse(key);
-console.log(keyParse);
-
-const getInputEmail = document.querySelector('input[name="email"]'); 
-
-const getInpuMessage = document.querySelector('textarea[name="message"]');
-
-if(keyParse !== null) {
-    getInputEmail.value = keyParse.email;
-    getInpuMessage.value = keyParse.message;    
+  data = JSON.parse(dataJSON);
+  const keys = Object.keys(data);
+  for (let key of keys) {
+    refs.form.elements[key].value = data[key];
+  }
 }
+getData();
 
-
-function onFormLocalStorage (e) {
-  
-    formData[e.target.name] = e.target.value;
+function onFormLocalStorage(e) {
+  formData[e.target.name] = e.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
- console.log(formData);
-
-} 
-
-// refs.form.addEventListener('input', onFormLocalStorage); 
-
-
-function onFormSubmit (e) {
-e.preventDefault();
-
-e.currentTarget.reset();
-localStorage.removeItem(STORAGE_KEY);
-
+  console.log(formData);
 }
 
-// function onTextareaInput (e) {
-// const message = e.target.value;
-// localStorage.setItem(STORAGE_KEY, message);
-// }
-
-// function populateTextarea () {
-// const savedMessage = localStorage.getItem(STORAGE_KEY);
-
-// if (savedMessage) {
-//     console.log(savedMessage);
-//     refs.textarea.value = savedMessage;   
-// }
-// }
+function onFormSubmit(e) {
+  e.preventDefault();
+  console.log(e.target.value);
+  e.currentTarget.reset();
+  localStorage.removeItem(STORAGE_KEY);
+}
