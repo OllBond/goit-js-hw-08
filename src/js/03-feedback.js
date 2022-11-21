@@ -11,15 +11,24 @@ const formData = {};
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormLocalStorage, 500));
 
+// oтримати дані з полів форми
 function getData() {
+  //за допомогою getItem отримуємо дані з localStorage
   const dataJSON = localStorage.getItem(STORAGE_KEY);
-  console.log(dataJSON);
+  // перевірка: якщо даних нема приходить null робимо інверсію
+  // null приводиться до false якщо не null true виходимо з функції
   if (!dataJSON) return;
-
-  data = JSON.parse(dataJSON);
-  const keys = Object.keys(data);
+  // якщо дані є парсимо dataJSON і записуємо в об'єкт formData
+  const formData = JSON.parse(dataJSON);
+  // отримуємо масив ключів formData email та message
+  const keys = Object.keys(formData);
+  // через цикл отримуємо доступ до кожного ключа
   for (let key of keys) {
-    refs.form.elements[key].value = data[key];
+    // у форми є elements: звертаємося до форми поля elements
+    //  у elements шукаємо елемент з name[key] (тобто email та message)
+    //знаходимо, звертаємося до value і присвоюємо значення яке лежить
+    // в ключі [key] об'єкту formData
+    refs.form.elements[key].value = formData[key];
   }
 }
 getData();
@@ -32,7 +41,8 @@ function onFormLocalStorage(e) {
 
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log(e.target.value);
+  console.log(e.currentTarget.value);
+
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
