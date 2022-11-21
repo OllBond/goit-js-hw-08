@@ -11,7 +11,7 @@ const formData = {};
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormLocalStorage, 500));
 
-// oтримати дані з полів форми
+// функція oтримати дані з полів форми
 function getData() {
   //за допомогою getItem отримуємо дані з localStorage
   const dataJSON = localStorage.getItem(STORAGE_KEY);
@@ -42,7 +42,8 @@ function onFormLocalStorage(e) {
 function onFormSubmit(e) {
   e.preventDefault();
   console.log(e.currentTarget.value);
-
+  // oчистка форми
   e.currentTarget.reset();
+  // очистка localStorage
   localStorage.removeItem(STORAGE_KEY);
 }
